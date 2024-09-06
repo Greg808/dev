@@ -9,7 +9,6 @@ services:
           '--collation-server=utf8mb4_unicode_ci'
       ]
       volumes:
-        - ./wp-data:/docker-entrypoint-initdb.d
         - db_data:/var/lib/mysql
       ports:
         - 3306:3306  
