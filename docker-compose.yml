@@ -1,18 +1,4 @@
 services:
-    web:
-        image: nginx:latest
-        ports:
-            - "80:80"
-        volumes:
-            - ./docker/config/nginx.conf:/etc/nginx/conf.d/nginx.conf
-            - ./app:/app
-    php:
-        build:
-            context: ./docker/php/
-            dockerfile: Docker
-        volumes:
-            - ./docker/php/conf.d/php.ini:/usr/local/etc/php/conf.d/conf.ini
-            - ./app:/app
     db:
       image: mysql:latest
       container_name: wordpressdb
@@ -25,10 +11,28 @@ services:
       volumes:
         - ./wp-data:/docker-entrypoint-initdb.d
         - db_data:/var/lib/mysql
+      ports:
+        - 3306:3306  
       environment:
         MYSQL_DATABASE: "${DB_NAME}"
         MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
         MYSQL_USER: "${DB_USER_NAME}"
         MYSQL_PASSWORD: "${DB_USER_PASSWORD}"
+    web:
+        image: nginx:latest
+        ports:
+            - "80:80"
+        volumes:
+            - ./docker/config/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+            - ./web:/:web
+        depends_on:
+                - db    
+    php:
+        build:
+            context: ./docker/config/php/
+            dockerfile: Docker
+        volumes:
+            - ./docker/config/php/conf.d/php.ini:/usr/local/etc/php/conf.d/conf.ini
+            - ./web:/web
 volumes:
   db_data:            
