@@ -10,6 +10,6 @@ DB_USER_NAME=<user_name>
 DB_USER_PASSWORD=<password>
 DB_ROOT_PASSWORD=<password>
 
-## run docker compose up to create dev environment/ run docker compose up -d for detached mode
+## ````run docker compose up```` to create dev environment/ run docker compose up -d for detached mode
 
 :-) Have fun! There is no place like 127.0.0.1 :-) 
